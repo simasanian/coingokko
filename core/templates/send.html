@@ -1,0 +1,26 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}こいんごっこ ホーム{% endblock %}
+
+{% block content %}
+<h2>ホーム画面</h2>
+<p>ここにトップページの内容を追加します。</p>
+
+        <h1>こいんごっこ：コイン送金</h1>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">送金する</button>
+        </form>
+        
+        <p><a href="/mypage/">送金履歴を見る</a></p>
+{% endblock %}

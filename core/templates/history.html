@@ -1,0 +1,46 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}こいんごっこ ホーム{% endblock %}
+
+{% block content %}
+<h2>ホーム画面</h2>
+<p>ここにトップページの内容を追加します。</p>
+
+        <h1>送金履歴</h1>
+        <table border="1">
+        <tr>
+            <th>送信者</th>
+            <th>受信者</th>
+            <th>金額</th>
+            <th>日時</th>
+        </tr>
+        {% for t in transactions %}
+        <tr>
+            <th>{{ t.sender.name }}</th>
+            <th>{{ t.receiver.name }}</th>
+            <th>{{ t.amount }}</th>
+            <th>{{ t.timestamp }}</th>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">送金履歴がありません</td></tr>
+        {% endfor %}
+        </table>
+        
+        <!-- ページ送り用 -->
+        <div>
+            {% if transactions.has_previous %}
+            <a href="?page={{ transactions.previous_page_number }}">＜＜前のページ</a>
+            {% endif %}
+
+            <span>ページ {{ transactions.number }} / {{ transactions.paginator.num_pages }}</span>
+
+            {% if transactions.has_next %}
+            <a href="?page={{ transactions.next_page_number }}">次のページ＞＞</a>
+            {% endif %}
+        </div>
+
+
+        <p><a href="/send/">送金画面に戻る</a>
+        <p><a href="/">ホームに戻る</a>
+{% endblock %}

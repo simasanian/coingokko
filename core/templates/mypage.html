@@ -1,0 +1,80 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}こいんごっこ ホーム{% endblock %}
+
+{% block content %}
+
+        <h1>{{ user.username }} さんのマイページ</h1>
+        <p>現在の残高： {{ user.balance }} coin</p>
+
+        <h2>送った履歴</h2>
+        <table border="1">
+        <tr>
+            <th>送信者</th>
+            <th>受信者</th>
+            <th>金額</th>
+            <th>日時</th>
+        </tr>
+        {% for tx in sent_transactions %}
+        <tr>
+            <th>{{ tx.sender.username }}</th>
+            <th>{{ tx.receiver.username }}</th>
+            <th>{{ tx.amount }}</th>
+            <th>{{ tx.timestamp }}</th>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">送金履歴がありません</td></tr>
+        {% endfor %}
+        </table>
+        <!-- ページ送り用 -->
+        <div>
+            {% if sent_transactions.has_previous %}
+            <a href="?sent_page={{ sent_transactions.previous_page_number }}">＜＜前のページ</a>
+            {% endif %}
+
+            <span>ページ {{ sent_transactions.number }} / {{ sent_transactions.paginator.num_pages }}</span>
+
+            {% if sent_transactions.has_next %}
+            <a href="?sent_page={{ sent_transactions.next_page_number }}">次のページ＞＞</a>
+            {% endif %}
+        </div>
+
+
+        <h2>受け取った履歴</h2>
+        <table border="1">
+        <tr>
+            <th>送信者</th>
+            <th>受信者</th>
+            <th>金額</th>
+            <th>日時</th>
+        </tr>
+        {% for tx in received_transactions %}
+        <tr>
+            <th>{{ tx.sender.username }}</th>
+            <th>{{ tx.receiver.username }}</th>
+            <th>{{ tx.amount }}</th>
+            <th>{{ tx.timestamp }}</th>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">受取履歴がありません</td></tr>
+        {% endfor %}
+        </table>
+        <!-- ページ送り用 -->
+        <div>
+            {% if received_transactions.has_previous %}
+            <a href="?received_page={{ received_transactions.previous_page_number }}">＜＜前のページ</a>
+            {% endif %}
+
+            <span>ページ {{ received_transactions.number }} / {{ received_transactions.paginator.num_pages }}</span>
+
+            {% if received_transactions.has_next %}
+            <a href="?received_page={{ received_transactions.next_page_number }}">次のページ＞＞</a>
+            {% endif %}
+        </div>
+
+
+        <p><a href="/send/">送金画面に戻る</a></p>
+        <p><a href="/">ホームに戻る</a></p>
+
+{% endblock %}

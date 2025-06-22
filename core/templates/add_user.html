@@ -1,0 +1,20 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}こいんごっこ ホーム{% endblock %}
+
+{% block content %}
+
+        <h1>ユーザー登録</h1>
+        <form method="post">
+            {% csrf_token %}
+                <p>{{ form.username.label }}: {{ form.username }}</p>
+                <!-- <p>{{ form.email.label }}: {{ form.email }}</p> いらないかも -->
+                <p>{{ form.password.label }}: {{ form.password }}</p>
+                <p>{{ form.balance.label }}: {{ form.balance }}</p>
+                <button type="submit">登録する</button>
+        </form>
+                    
+        <p><a href="/send/">送金画面に戻る</a>
+        <p><a href="/">ホームに戻る</a>
+{% endblock %}
